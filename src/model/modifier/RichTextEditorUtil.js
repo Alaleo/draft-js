@@ -105,6 +105,10 @@ const RichTextEditorUtil = {
    */
   onBackspace: function(editorState: EditorState): ?EditorState {
     var selection = editorState.getSelection();
+    var blockCurrent = content.getBlockForKey(startKey);
+    if(blockCurrent.getType() === 'atomic'){
+      return editorState;
+    }
     if (
       !selection.isCollapsed() ||
       selection.getAnchorOffset() ||
