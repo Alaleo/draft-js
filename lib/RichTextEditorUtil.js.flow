@@ -80,7 +80,10 @@ const RichTextEditorUtil = {
    * just remove the existing style.
    */
   onBackspace: function (editorState: EditorState): ?EditorState {
+    // First, try to remove a preceding atomic block.
+    var content = editorState.getCurrentContent();
     var selection = editorState.getSelection();
+    var startKey = selection.getStartKey();
     var blockCurrent = content.getBlockForKey(startKey);
     if (blockCurrent.getType() === 'atomic') {
       return editorState;
@@ -89,9 +92,6 @@ const RichTextEditorUtil = {
       return null;
     }
 
-    // First, try to remove a preceding atomic block.
-    var content = editorState.getCurrentContent();
-    var startKey = selection.getStartKey();
     var blockBefore = content.getBlockBefore(startKey);
 
     if (blockBefore && blockBefore.getType() === 'atomic') {

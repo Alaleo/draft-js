@@ -1,5 +1,5 @@
 /**
- * Draft v0.8.1
+ * Draft v0.8.1a
  *
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -7465,7 +7465,10 @@ var Draft =
 	   * just remove the existing style.
 	   */
 	  onBackspace: function onBackspace(editorState) {
+	    // First, try to remove a preceding atomic block.
+	    var content = editorState.getCurrentContent();
 	    var selection = editorState.getSelection();
+	    var startKey = selection.getStartKey();
 	    var blockCurrent = content.getBlockForKey(startKey);
 	    if (blockCurrent.getType() === 'atomic') {
 	      return editorState;
@@ -7474,9 +7477,6 @@ var Draft =
 	      return null;
 	    }
 
-	    // First, try to remove a preceding atomic block.
-	    var content = editorState.getCurrentContent();
-	    var startKey = selection.getStartKey();
 	    var blockBefore = content.getBlockBefore(startKey);
 
 	    if (blockBefore && blockBefore.getType() === 'atomic') {
