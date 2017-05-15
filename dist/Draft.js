@@ -6564,13 +6564,13 @@ var Draft =
 	        tree: editorState.getBlockTree(key)
 	      };
 
-	      var configForType = blockRenderMap.get(blockType);
+	      var configForType = blockRenderMap.get(blockType) || blockRenderMap.get('unstyled');
 
 	      wrapperTemplate = configForType.wrapper;
 
 	      var useNewWrapper = wrapperTemplate !== currentWrapperTemplate;
 
-	      var _Element = configForType.element || blockRenderMap.get('unstyled').element;
+	      var _Element = configForType.element;
 
 	      var depth = block.getDepth();
 	      var className = this.props.blockStyleFn(block);

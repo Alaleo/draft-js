@@ -142,16 +142,13 @@ class DraftEditorContents extends React.Component {
         tree: editorState.getBlockTree(key),
       };
 
-      const configForType = blockRenderMap.get(blockType);
+      const configForType = blockRenderMap.get(blockType) || blockRenderMap.get('unstyled');
 
       wrapperTemplate = configForType.wrapper;
 
       const useNewWrapper = wrapperTemplate !== currentWrapperTemplate;
 
-      const Element = (
-        configForType.element ||
-        blockRenderMap.get('unstyled').element
-      );
+      const Element = configForType.element;
 
       const depth = block.getDepth();
       let className = this.props.blockStyleFn(block);
